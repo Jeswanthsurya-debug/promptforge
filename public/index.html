@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PromptForge: fix weak AI prompts</title>
+  <meta name="description" content="Paste a prompt. See why it is weak, in seconds. Get a stronger version for any language.">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="modulepreload" href="/lib/analyzer.js">
+  <link rel="modulepreload" href="/js/view.js">
+</head>
+<body>
+  <a class="skip" href="#editor">Skip to prompt</a>
+  <header>
+    <h1>PromptForge</h1>
+    <p>Paste a prompt. See what it is missing. Ship a better one.</p>
+  </header>
+
+  <noscript><p class="vague">PromptForge needs JavaScript to score your prompt live.</p></noscript>
+
+  <main>
+    <section class="input" aria-labelledby="in-h">
+      <h2 id="in-h" class="sr">Your prompt</h2>
+      <label for="editor">Prompt</label>
+      <textarea id="editor" rows="8" maxlength="4000" placeholder="Write me something good about sorting"></textarea>
+      <div class="row">
+        <div>
+          <label for="lang">Programming language</label>
+          <select id="lang"><option value="">None (general prompt)</option></select>
+        </div>
+        <p class="meta" id="meta" aria-live="polite">0 words</p>
+      </div>
+      <p class="meta" id="demo-h">Live demo: load an example</p>
+      <div class="demos" role="group" aria-labelledby="demo-h">
+        <button type="button" id="play">Watch demo</button>
+        <button type="button" class="demo" data-demo="weak">Weak</button>
+        <button type="button" class="demo" data-demo="okay">Okay</button>
+        <button type="button" class="demo" data-demo="strong">Strong</button>
+      </div>
+      <p class="meta" id="demo-note" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="result" aria-labelledby="out-h">
+      <h2 id="out-h" class="sr">Analysis</h2>
+      <div class="score">
+        <svg viewBox="0 0 120 120" role="img" aria-labelledby="ring-t">
+          <title id="ring-t">Prompt score</title>
+          <circle class="track" cx="60" cy="60" r="52"/>
+          <circle class="arc" id="arc" cx="60" cy="60" r="52"/>
+          <text id="num" x="60" y="68" text-anchor="middle">0</text>
+        </svg>
+        <p id="grade" role="status" aria-live="polite">Start typing</p>
+      </div>
+      <ul id="dims" class="dims"></ul>
+      <p id="vague" class="vague" hidden></p>
+    </section>
+
+    <section class="forged" aria-labelledby="f-h">
+      <h2 id="f-h">Stronger version</h2>
+      <pre id="forged" tabindex="0">Your improved prompt appears here.</pre>
+      <div class="row">
+        <button type="button" id="copy" disabled>Copy prompt</button>
+        <button type="button" id="polish" disabled hidden>Polish with Gemini</button>
+        <span id="status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
